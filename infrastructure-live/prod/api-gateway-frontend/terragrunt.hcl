@@ -46,7 +46,7 @@ inputs = {
             lambda_function_arn = dependency.lambda.outputs.lambda_details["lambda1"].arn
             mapping_template_body = "$input.json('$')"
         },
-        api1 = {
+        api2 = {
             path_part_name = "history"
             api_method = "GET"
             lambda_function_name = dependency.lambda.outputs.lambda_details["lambda2"].name
