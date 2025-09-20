@@ -9,11 +9,6 @@ include "root" {
   expose = true
 }
 
-include "env" {
-  path = find_in_parent_folders("env.hcl")
-  expose = true
-  merge_strategy = "no_merge"
-}
 
 include "mock_outputs" {
   path = "${get_terragrunt_dir()}/mock_outputs.hcl"

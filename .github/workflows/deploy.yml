@@ -49,5 +49,5 @@ jobs:
           terragrunt run-all validate
 
       - name: Terragrunt Apply
-        working-directory: infrastructure-live/
+        working-directory: infrastructure-live/prod
         run: terragrunt run-all apply --terragrunt-non-interactive -auto-approve
