@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch History</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .percentage-bar {
+            height: 20px;
+            background-color: green;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Fetch User History</h2>
+    <input type="text" id="username" placeholder="Enter username">
+    <button onclick="fetchHistory()">Submit</button>
+    <br><br>
+    <table id="resultTable">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Gender</th>
+                <th>Timestamp</th>
+                <th>Squat</th>
+                <th>Squat Category</th>
+                <th>Squat Percentage</th>
+                <th>Bench</th>
+                <th>Bench Category</th>
+                <th>Bench Percentage</th>
+                <th>Deadlift</th>
+                <th>Deadlift Category</th>
+                <th>Deadlift Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will be added here dynamically -->
+        </tbody>
+    </table>
+    <script>
+        const api_url = "API_GATEWAY_URL_PLACEHOLDER";
+        
+        async function fetchHistory() {
+            const username = document.getElementById('username').value;
+            if (!username) {
+                alert('Please enter a username');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${api_url}?username=${username}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("Data fetched:", data); // Debugging line
+
+                // Parse the JSON string from the body if necessary
+                let parsedData;
+                try {
+                    parsedData = JSON.parse(data.body);
+                } catch (e) {
+                    parsedData = data;
+                }
+                
+                displayData(parsedData);
+            } catch (error) {
+                alert(`Error fetching data: ${error}`);
+                console.error("Fetch error:", error); // Debugging line
+            }
+        }
+
+        function displayData(data) {
+            const tbody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = ''; // Clear existing rows
+
+            if (Array.isArray(data)) {
+                data.forEach(item => {
+                    const row = tbody.insertRow();
+
+                    row.insertCell().textContent = item.username || 'N/A';
+                    row.insertCell().textContent = item.gender || 'N/A';
+                    row.insertCell().textContent = item.timestamp || 'N/A';
+                    row.insertCell().textContent = item.squat || 'N/A';
+                    row.insertCell().textContent = item.squat_category || 'N/A';
+
+                    const squatPercentageCell = row.insertCell();
+                    const squatPercentageBar = document.createElement('div');
+                    squatPercentageBar.className = 'percentage-bar';
+                    squatPercentageBar.style.width = (item.squat_percentage || 0) + '%';
+                    squatPercentageBar.textContent = (item.squat_percentage || 0) + '%';
+                    squatPercentageCell.appendChild(squatPercentageBar);
+
+                    row.insertCell().textContent = item.bench || 'N/A';
+                    row.insertCell().textContent = item.bench_category || 'N/A';
+
+                    const benchPercentageCell = row.insertCell();
+                    const benchPercentageBar = document.createElement('div');
+                    benchPercentageBar.className = 'percentage-bar';
+                    benchPercentageBar.style.width = (item.bench_percentage || 0) + '%';
+                    benchPercentageBar.textContent = (item.bench_percentage || 0) + '%';
+                    benchPercentageCell.appendChild(benchPercentageBar);
+
+                    row.insertCell().textContent = item.deadlift || 'N/A';
+                    row.insertCell().textContent = item.deadlift_category || 'N/A';
+
+                    const deadliftPercentageCell = row.insertCell();
+                    const deadliftPercentageBar = document.createElement('div');
+                    deadliftPercentageBar.className = 'percentage-bar';
+                    deadliftPercentageBar.style.width = (item.deadlift_percentage || 0) + '%';
+                    deadliftPercentageBar.textContent = (item.deadlift_percentage || 0) + '%';
+                    deadliftPercentageCell.appendChild(deadliftPercentageBar);
+                });
+            } else {
+                alert('Invalid data format received from server');
+                console.error("Invalid data format:", data); // Debugging line
+            }
+        }
+    </script>
+</body>
+</html>
