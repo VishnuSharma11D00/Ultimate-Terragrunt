@@ -3,7 +3,7 @@
 locals {
   aws_region     = get_env("AWS_REGION", "ap-south-1")
   account_id     = get_env("ACCOUNT_ID", "")
-  env            = "prod"
+  env            = "str-cat-prod"
 }
 
 remote_state {

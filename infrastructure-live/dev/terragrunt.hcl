@@ -18,7 +18,7 @@ include "env" {
 locals {
   aws_region     = "ap-south-1"
   account_id     = "<ADD-YOUR-ACCOUNT-ID>"
-  env            = "dev"
+  env            = "str-cat-dev"
 }
 
 remote_state {
