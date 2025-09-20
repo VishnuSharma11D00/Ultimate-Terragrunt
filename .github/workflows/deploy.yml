@@ -43,11 +43,11 @@ jobs:
           terragrunt -version
 
       - name: Terragrunt Init & Validate
-        working-directory: infrastructure-live/stage
+        working-directory: infrastructure-live/prod
         run: |
           terragrunt run-all init -input=false --terragrunt-ignore-dependency-errors
           terragrunt run-all validate
 
       - name: Terragrunt Apply
-        working-directory: infrastructure-live/stage
+        working-directory: infrastructure-live/
         run: terragrunt run-all apply --terragrunt-non-interactive -auto-approve
