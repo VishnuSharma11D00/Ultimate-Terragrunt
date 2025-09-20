@@ -1,11 +1,5 @@
 # Terragrunt/terragrunt.hcl
 
-include "env" {
-  path = "./env.hcl"
-  expose = true
-  merge_strategy = "no_merge"
-}
-
 locals {
   aws_region     = get_env("AWS_REGION", "ap-south-1")
   account_id     = get_env("ACCOUNT_ID", "")
