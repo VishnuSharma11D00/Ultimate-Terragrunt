@@ -1,9 +1,15 @@
 # Terragrunt/terragrunt.hcl
 
+include "env" {
+  path = "./env.hcl"
+  expose = true
+  merge_strategy = "no_merge"
+}
+
 locals {
   aws_region     = get_env("AWS_REGION", "ap-south-1")
   account_id     = get_env("ACCOUNT_ID", "")
-  env            = include.root.locals.env
+  env            = include.env.locals.env
 }
 
 remote_state {
@@ -38,16 +44,13 @@ provider "aws" {
 
   assume_role {
     # (valid ~1 hour by default and session name helps audit logs)
-    session_name = "strcat-stage"
+    session_name = "strcat-prod"
     role_arn = "arn:aws:iam::${local.account_id}:role/terraform"
   }
  
 }
 EOF
 }
-
-#  access_key = "${local.credentials.credentials.aws_access_key}"
-#  secret_key = "${local.credentials.credentials.aws_secret_key}"
 
 
 

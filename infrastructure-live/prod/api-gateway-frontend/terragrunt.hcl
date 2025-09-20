@@ -10,9 +10,13 @@ include "root" {
 locals {
   my_region        = include.root.locals.aws_region
   account_Id       = tostring(include.root.locals.account_id)
-  env              = include.root.locals.env
 }
 
+include "env" {
+  path = find_in_parent_folders("env.hcl")
+  expose = true
+  merge_strategy = "no_merge"
+}
 
 include "mock_outputs" {
   path = "${get_terragrunt_dir()}/mock_outputs.hcl"
@@ -20,15 +24,14 @@ include "mock_outputs" {
 }
 
 dependency "lambda"{
-    config_path = "../lambda-frontend"
+    config_path = "../lambda-backend"
 
     mock_outputs = include.mock_outputs.locals.mock_outputs_lambda
     mock_outputs_allowed_terraform_commands = ["init", "validate", "plan"]
 }
 
-
 inputs = {
-    env = local.env
+    env = include.env.locals.env
     api_name = "Strength_cat_api"
     cors_allowed_origin = "*"
     my_region = local.my_region
