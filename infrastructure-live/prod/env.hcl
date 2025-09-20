@@ -1,3 +1,0 @@
-locals {
-    env = "strcat-prod"
-}

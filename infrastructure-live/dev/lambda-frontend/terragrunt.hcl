@@ -28,15 +28,16 @@ dependency "dynamodb" {
 }
 
 locals {
-  lambda_code_path = "${get_terragrunt_dir()}/../../../lambda-codes-${include.env.locals.env}"
+  lambda_code_path = "${get_terragrunt_dir()}/../../../lambda-codes-${include.root.locals.env}"
   my_region        = include.root.locals.aws_region
   account_Id       = tostring(include.root.locals.account_id)
   lambda_prefix    = "FE"
   tag_value = "terragrunt_frontend"
+  env = include.root.locals.env
 }
 
 inputs = {
-  env = include.env.locals.env
+  env = local.env
   aws_region = local.my_region
   account_id = local.account_Id
   prefix = local.lambda_prefix
