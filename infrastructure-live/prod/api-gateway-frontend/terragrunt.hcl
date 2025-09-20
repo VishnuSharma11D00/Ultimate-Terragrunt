@@ -19,7 +19,7 @@ include "mock_outputs" {
 }
 
 dependency "lambda"{
-    config_path = "../lambda-backend"
+    config_path = "../lambda-frontend"
 
     mock_outputs = include.mock_outputs.locals.mock_outputs_lambda
     mock_outputs_allowed_terraform_commands = ["init", "validate", "plan"]
