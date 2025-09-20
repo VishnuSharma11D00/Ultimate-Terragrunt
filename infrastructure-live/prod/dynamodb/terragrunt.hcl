@@ -10,10 +10,11 @@ locals {
 
 include "root" {
   path = find_in_parent_folders()
+  expose = true
 }
 
 
 inputs = {
   dynamodb_tables = local.config.dynamodb_tables
-  env = include.root.locals.env
+ env              = include.root.locals.env
 }
