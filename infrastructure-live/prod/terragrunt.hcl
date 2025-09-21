@@ -15,12 +15,12 @@ remote_state {
   }
   config = {
     # profile = "Terraform" # no need for this when it is doing aws configure in github actions
-    bucket = "${state_prefix}-tf-state"
+    bucket = "${local.state_prefix}-tf-state"
 
     key = "${path_relative_to_include()}/terraform.tfstate"
     region = local.aws_region
     encrypt = true
-    dynamodb_table = "${state_prefix}-terraform-lock-table"
+    dynamodb_table = "${local.state_prefix}-terraform-lock-table"
 
     assume_role = {
       role_arn = "arn:aws:iam::${local.account_id}:role/terraform"
