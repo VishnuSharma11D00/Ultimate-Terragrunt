@@ -33,7 +33,7 @@ dependency "lambda"{
 
 inputs = {
     env = include.env.locals.env
-    api_name = "Strength_cat_api"
+    api_name = "Strength_cat_apigw"
     cors_allowed_origin = "*"
     my_region = local.my_region
     account_Id = local.account_Id
