@@ -25,12 +25,12 @@ remote_state {
   config = {
     # profile is when you do aws login locally with your 'Terraform' user profile
     profile = "Terraform"
-    bucket = "${state_prefix}-tf-state"
+    bucket = "${local.state_prefix}-tf-state"
 
     key = "${path_relative_to_include()}/terraform.tfstate"
     region = local.aws_region
     encrypt = true
-    dynamodb_table = "${state_prefix}-terraform-lock-table"
+    dynamodb_table = "${local.state_prefix}-terraform-lock-table"
 
     assume_role = {
       role_arn = "arn:aws:iam::${local.account_id}:role/terraform"
