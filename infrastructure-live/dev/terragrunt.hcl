@@ -1,11 +1,5 @@
 # Terragrunt/terragrunt.hcl
 
-include "env" {
-  path = "./env.hcl"
-  expose = true
-  merge_strategy = "no_merge"
-}
-
 # You'd usually use your credentials directly instead of github secrets, for testing the DEV environment locally
 
 #  access_key = "${local.credentials.credentials.aws_access_key}"
@@ -18,7 +12,8 @@ include "env" {
 locals {
   aws_region     = "ap-south-1"
   account_id     = "<ADD-YOUR-ACCOUNT-ID>"
-  env            = "str-cat-dev"
+  state_prefix   = "str-cat" 
+  # make this very unique so there won't be state clash between different projects
 }
 
 remote_state {
@@ -30,12 +25,12 @@ remote_state {
   config = {
     # profile is when you do aws login locally with your 'Terraform' user profile
     profile = "Terraform"
-    bucket = "tharive-tf-state"
+    bucket = "${state_prefix}-tf-state"
 
-    key = "${local.env}/terraform.tfstate"
+    key = "${path_relative_to_include()}/terraform.tfstate"
     region = local.aws_region
     encrypt = true
-    dynamodb_table = "terraform-lock-table"
+    dynamodb_table = "${state_prefix}-terraform-lock-table"
 
     assume_role = {
       role_arn = "arn:aws:iam::${local.account_id}:role/terraform"

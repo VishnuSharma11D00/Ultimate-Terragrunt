@@ -46,3 +46,7 @@ backend.tf
 provider.tf
 
 state.tf
+
+# ignore cache and local lock files of terragrunt
+.terragrunt-cache/
+.terraform.lock.hcl

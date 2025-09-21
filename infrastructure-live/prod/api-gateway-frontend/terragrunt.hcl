@@ -7,10 +7,15 @@ include "root" {
   expose = true
 }
 
+include "env" {
+  path = find_in_parent_folders("env.hcl")
+  expose = true
+  merge_strategy = "no_merge"
+}
+
 locals {
   my_region        = include.root.locals.aws_region
   account_Id       = tostring(include.root.locals.account_id)
-  env              = include.root.locals.env
 }
 
 include "mock_outputs" {
@@ -25,8 +30,9 @@ dependency "lambda"{
     mock_outputs_allowed_terraform_commands = ["init", "validate", "plan"]
 }
 
+
 inputs = {
-    env = local.env
+    env = include.env.locals.env
     api_name = "Strength_cat_api"
     cors_allowed_origin = "*"
     my_region = local.my_region
@@ -40,7 +46,7 @@ inputs = {
             lambda_function_arn = dependency.lambda.outputs.lambda_details["lambda1"].arn
             mapping_template_body = "$input.json('$')"
         },
-        api2 = {
+        api1 = {
             path_part_name = "history"
             api_method = "GET"
             lambda_function_name = dependency.lambda.outputs.lambda_details["lambda2"].name
