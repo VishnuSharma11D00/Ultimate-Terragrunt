@@ -7,10 +7,15 @@ include "root" {
   expose = true
 }
 
+include "env" {
+  path = find_in_parent_folders("env.hcl")
+  expose = true
+  merge_strategy = "no_merge"
+}
+
 locals {
   my_region        = include.root.locals.aws_region
   account_Id       = tostring(include.root.locals.account_id)
-  env = include.root.locals.env
 }
 
 include "mock_outputs" {
@@ -27,7 +32,7 @@ dependency "lambda"{
 
 
 inputs = {
-    env = local.env
+    env = include.env.locals.env
     api_name = "Strength_cat_api"
     cors_allowed_origin = "*"
     my_region = local.my_region

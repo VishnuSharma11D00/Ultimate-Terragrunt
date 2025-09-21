@@ -10,11 +10,16 @@ locals {
 
 include "root" {
   path = find_in_parent_folders()
+}
+
+include "env" {
+  path = find_in_parent_folders("env.hcl")
   expose = true
+  merge_strategy = "no_merge"
 }
 
 
 inputs = {
   dynamodb_tables = local.config.dynamodb_tables
- env              = include.root.locals.env
+  env = include.env.locals.env
 }

@@ -3,7 +3,8 @@
 locals {
   aws_region     = get_env("AWS_REGION", "ap-south-1")
   account_id     = get_env("ACCOUNT_ID", "")
-  env            = "str-cat-prod"
+  state_prefix   = "str-cat-prod"
+  # make this very unique so there won't be state clash between different projects
 }
 
 remote_state {
@@ -13,13 +14,13 @@ remote_state {
     if_exists = "overwrite_terragrunt"
   }
   config = {
-    # profile = "Terraform" no need for this when it is doing aws configure in github actions
-    bucket = "tharive-tf-state"
+    # profile = "Terraform" # no need for this when it is doing aws configure in github actions
+    bucket = "${state_prefix}-tf-state"
 
-    key = "${local.env}/terraform.tfstate"
+    key = "${path_relative_to_include()}/terraform.tfstate"
     region = local.aws_region
     encrypt = true
-    dynamodb_table = "terraform-lock-table"
+    dynamodb_table = "${state_prefix}-terraform-lock-table"
 
     assume_role = {
       role_arn = "arn:aws:iam::${local.account_id}:role/terraform"

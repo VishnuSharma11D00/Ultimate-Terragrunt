@@ -9,6 +9,12 @@ include "root" {
   expose = true
 }
 
+include "env" {
+  path = find_in_parent_folders("env.hcl")
+  expose = true
+  merge_strategy = "no_merge"
+}
+
 
 include "mock_outputs" {
   path = "${get_terragrunt_dir()}/mock_outputs.hcl"
@@ -23,16 +29,15 @@ dependency "dynamodb" {
 }
 
 locals {
-  lambda_code_path = "${get_terragrunt_dir()}/../../../lambda-codes-prod"
+  lambda_code_path = "${get_terragrunt_dir()}/../../../lambda-codes-dev"
   my_region        = include.root.locals.aws_region
   account_Id       = tostring(include.root.locals.account_id)
   lambda_prefix    = "FE"
   tag_value = "terragrunt_frontend"
-  env = include.root.locals.env
 }
 
 inputs = {
-  env = local.env
+  env = include.env.locals.env
   aws_region = local.my_region
   account_id = local.account_Id
   prefix = local.lambda_prefix
