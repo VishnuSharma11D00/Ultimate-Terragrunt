@@ -45,7 +45,7 @@ inputs = {
     lambda_functions = {
     lambda1 = {
         name        = "StrengthCat"
-        zip_file    = "${local.lambda_code_path}/lambda.zip"
+        zip_file    = "${local.lambda_code_path}/str-cat-lambda.zip"
         policy_name = "StrengthCat_lambda-policy"
         tagValue    = local.tag_value
         environment_variables = {
@@ -67,7 +67,7 @@ inputs = {
     },
     lambda2 = {
         name        = "History"
-        zip_file    = "${local.lambda_code_path}/lambda_history.zip"
+        zip_file    = "${local.lambda_code_path}/history-2.zip"
         policy_name = "History_lambda-policy"
         tagValue    = local.tag_value
         environment_variables = {
