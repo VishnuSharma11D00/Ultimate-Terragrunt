@@ -53,7 +53,7 @@ inputs = {
             lambda_function_arn = dependency.lambda.outputs.lambda_details["lambda2"].arn
             mapping_template_body = <<EOT
             {
-              "username": "$input.params('username')",
+              "username": "$input.params('username')"
             }
             EOT
         }
