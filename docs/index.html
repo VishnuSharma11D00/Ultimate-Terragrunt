@@ -269,8 +269,9 @@
 
           if (color) {
             if (cat === category.toLowerCase()) {
-              bar.style.width = `${percentage}%`;
-              bar.innerText = `${percentage}%`;
+              const formattedPercentage = Number(percentage).toFixed(2); // <-- two decimals
+              bar.style.width = `${formattedPercentage}%`;
+              bar.innerText = `${formattedPercentage}%`;
               color = false; // Stop coloring after the calculated category
             } else {
               bar.style.width = "100%";

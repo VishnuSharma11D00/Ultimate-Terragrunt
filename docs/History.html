@@ -108,8 +108,12 @@
             const squatPercentageCell = row.insertCell();
             const squatPercentageBar = document.createElement("div");
             squatPercentageBar.className = "percentage-bar";
-            squatPercentageBar.style.width = (item.squat_percentage || 0) + "%";
-            squatPercentageBar.textContent = (item.squat_percentage || 0) + "%";
+            squatPercentageBar.style.width = `${Number(
+              item.squat_percentage || 0
+            )}%`;
+            squatPercentageBar.textContent = `${Number(
+              item.squat_percentage || 0
+            ).toFixed(2)}%`;
             squatPercentageCell.appendChild(squatPercentageBar);
 
             row.insertCell().textContent = item.bench || "N/A";
@@ -118,8 +122,12 @@
             const benchPercentageCell = row.insertCell();
             const benchPercentageBar = document.createElement("div");
             benchPercentageBar.className = "percentage-bar";
-            benchPercentageBar.style.width = (item.bench_percentage || 0) + "%";
-            benchPercentageBar.textContent = (item.bench_percentage || 0) + "%";
+            benchPercentageBar.style.width = `${Number(
+              item.bench_percentage || 0
+            )}%`;
+            benchPercentageBar.textContent = `${Number(
+              item.bench_percentage || 0
+            ).toFixed(2)}%`;
             benchPercentageCell.appendChild(benchPercentageBar);
 
             row.insertCell().textContent = item.deadlift || "N/A";
@@ -128,10 +136,12 @@
             const deadliftPercentageCell = row.insertCell();
             const deadliftPercentageBar = document.createElement("div");
             deadliftPercentageBar.className = "percentage-bar";
-            deadliftPercentageBar.style.width =
-              (item.deadlift_percentage || 0) + "%";
-            deadliftPercentageBar.textContent =
-              (item.deadlift_percentage || 0) + "%";
+            deadliftPercentageBar.style.width = `${Number(
+              item.deadlift_percentage || 0
+            )}%`;
+            deadliftPercentageBar.textContent = `${Number(
+              item.deadlift_percentage || 0
+            ).toFixed(2)}%`;
             deadliftPercentageCell.appendChild(deadliftPercentageBar);
           });
         } else {
