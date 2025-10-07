@@ -3,6 +3,9 @@
 This project demonstrates how to build and manage a **serverless architecture on AWS** using **Terragrunt**, **Terraform**, and **GitHub Actions**, following best DevOps practices.
 It automates environment provisioning, manages separate states for each module, and includes CI/CD integration with GitHub workflows.
 
+🔗 Live Demo (Hosted via GitHub Pages):
+https://vishnusharma11d00.github.io/Ultimate-Terragrunt-for-Serverless-Architecture/
+
 ---
 
 ## 🧩 Project Overview
@@ -101,6 +104,9 @@ Then, update the **API URLs** (from Terragrunt apply outputs):
 - In `History.html`: replace `apiUrl` with the `.../history` endpoint.
 
 Commit and push changes to redeploy automatically.
+
+🔗 View Hosted Site:
+https://vishnusharma11d00.github.io/Ultimate-Terragrunt-for-Serverless-Architecture/
 
 ---
 
